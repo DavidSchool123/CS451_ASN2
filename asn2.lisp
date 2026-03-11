@@ -71,7 +71,7 @@ If both are different, then do not print anything and return false. |#
 two numbers.   If the first parameter is an asterisk, then you must return the multiplication of the 
 numbers.    If the first parameter is a forward slash, then you must return the division of the numbers.
 the first parameter is anything else, then print an error message and return zero.   |#
-
+#|
 (defun calculator (sign num1 num2)
     (declare (integer num1 num2))
     (declare (string sign))
@@ -85,7 +85,19 @@ the first parameter is anything else, then print an error message and return zer
 
 (calculator "*" 2 3)
 (calculator "/" 4 2)
-(calculator "-" 9 4)
+(calculator "-" 9 4)|#
 
+;; 2c
+#|Create a function that receives as a parameter a cons in the format (number1 . number2) and 
+returns the sum of both numbers inside that cons.    For example (2c (cons 2 3)) must return 5.  |#
+#|
+(defun conFunc (consN)
+    (+ (car consN) (cdr consN))
+)
+
+(conFunc (cons 2 21))|#
+
+;; 2d
+#|Create a non-recursive function that returns the factorial of a number passed as a parameter. |#
 
 ;; Question 3

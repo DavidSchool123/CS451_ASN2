@@ -52,7 +52,7 @@ a greeting and return true.
 (LLM instead of false, return the string “false”)
 (LLM return true in a list)
 If both are different, then do not print anything and return false. |#
-
+#|
 (defun reader (preText)
     (let ((userText (read)))
         (if (string-equal preText userText)
@@ -64,6 +64,28 @@ If both are different, then do not print anything and return false. |#
         )
     )
 )
-(reader "testing")
+(reader "testing")|#
+
+;; 2b
+#| Create a function that receives three parameters, a char/string/atom (whatever you prefer) and 
+two numbers.   If the first parameter is an asterisk, then you must return the multiplication of the 
+numbers.    If the first parameter is a forward slash, then you must return the division of the numbers.
+the first parameter is anything else, then print an error message and return zero.   |#
+
+(defun calculator (sign num1 num2)
+    (declare (integer num1 num2))
+    (declare (string sign))
+
+    (cond
+        ((string= sign "*") (* num1 num2))
+        ((string= sign "/") (/ num1 num2))
+        (t (prong (print "Error: sign not correct") t))
+    )
+)
+
+(calculator "*" 2 3)
+(calculator "/" 4 2)
+(calculator "-" 9 4)
+
 
 ;; Question 3

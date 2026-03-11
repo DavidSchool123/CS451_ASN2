@@ -99,16 +99,14 @@ returns the sum of both numbers inside that cons.    For example (2c (cons 2 3))
 
 ;; 2d
 #|Create a non-recursive function that returns the factorial of a number passed as a parameter. |#
+
+
 (defun loopFactorial (num)
     (declare (integer num))
-    (let ((*total* num) (*dec* 1) (*loopNum* (- num 1)))
-        (loop while (> *loopNum* 0) do
-            (setq *total* (* *total* *loopNum*))
-            (setq *loopNum* (- *loopNum* *dec*))
-        )
-        (print *total*)
-    )
+    
 )
 
+
 (loopFactorial 3)
+
 ;; Question 3

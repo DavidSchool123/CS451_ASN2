@@ -116,3 +116,12 @@ returns the sum of both numbers inside that cons.    For example (2c (cons 2 3))
 
 
 ;; Question 3
+;; on assignment paper
+
+(defun 3 (n)
+    (let ((result nil)) ;; create result and set it to nil (empty)
+         (do ((i 0 (+ i 1))) ;; create do loop with i = 0 and with each recursition it does i+=1
+             ((= i n) (cons '* (cons 4 (cons (cons '+ (reverse result)) nil)))) ;; loop ends when i = n. & when it stops we return the list (* 4 (+ ...)) for how many n's
+             (setq result ;; updates results, setting the new term to the list. 
+                   (cons (/ (expt -1 i) (+ (* 2 i) 1)) result))))) ;; this is the formula ( (-1)^i / (2i + 1)) I came up with to calculate the next terms of the pi sequence. (as -1^i does the pattern of 1, -1, 1,.. which is adding and subtracting of the formula (+ - + part) as well as being the numerator 1 of the formula. and the 2i + 1 is the denominator that produces the vlaues 3, 5, ... . WITH the / (divide) that seperates them both is the fraction part of the formula.
+                                                                    ;; after wards which you just add the term to the list (result) using the:  cons (formula_terms) result 

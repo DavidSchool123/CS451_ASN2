@@ -79,7 +79,7 @@ the first parameter is anything else, then print an error message and return zer
     (cond
         ((string= sign "*") (* num1 num2))
         ((string= sign "/") (/ num1 num2))
-        (t (prong (print "Error: sign not correct") t))
+        (t (progn (print "Error: sign not correct") 0))
     )
 )
 
@@ -101,12 +101,16 @@ returns the sum of both numbers inside that cons.    For example (2c (cons 2 3))
 #|Create a non-recursive function that returns the factorial of a number passed as a parameter. |#
 
 
-(defun loopFactorial (num)
-    (declare (integer num))
-    
-)
 
 
-(loopFactorial 3)
+;; 2e
+;; Question: Create a function that receives two lists of numbers as parameters. If the lists do not have the same size, the function ends and returns an empty list.(LLM return “wrong size”)Otherwise, you must return another list that is composed of the sum of the elements on both list in order. For example, (2e '(1 2 3) '(4 5 6)) should return (5 7 9).
+(defun listsum (x1 x2)
+    (if (/= (length x1) (length x2)) ;; returns empty list if the 2 lists are not the same in length
+        nil
+        (cons (+ (car x1) (car x2)) ;; adding the lists
+              (listsum (cdr x1) (cdr x2))))) ;; returns the sum of the two lists (in a new list)
+        
+
 
 ;; Question 3

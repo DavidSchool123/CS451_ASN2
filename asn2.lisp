@@ -29,15 +29,12 @@ both numbers |#
 it (if the number is odd).   For example, if you read the value 8 or 7 the return should be (1 3 5 7) |#
 #|
 
-(let ((num (read)) (odd-list '()) (dec 1))  ;; read the number, make the empty list, and the decrement value
-    (if (plusp num)  ;; checks if it is positive
-        (loop whole (> num 0) do ;; the loop break condition
-            (if (not (zerop (rem num 2))) ;;if number is odd, add to list
-                (push num odd-list))
-            (setq num (-num dec)))) ;; lower the value of num by 1 as dec is 1
-    odd-list)
-
-
+(let ((n (read)) ;; n is number entered 
+(result nil));; set a list (result) as empty
+(do ((i 1 (+ i 2))) ;;starts at 1 and increases by 2 so it only takes in the odd numbers 
+((> i n) result) ;;when i gets larger than n, the loop ends and returns result
+(push i result))) ;;adds i to the list
+;; ^fix enditing, its not letting me
 |#
 
 

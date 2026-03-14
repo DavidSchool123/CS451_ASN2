@@ -105,7 +105,7 @@ returns the sum of both numbers inside that cons.    For example (2c (cons 2 3))
 
 (defun 2d (n)
     (let ((result 1)) ;; want to start the function at 1 as the factorial multiples start from 1 (save the 1 to result)
-         (dottimes (x n result) ;; repeat it n times, and at the end return the result. 
+         (dotimes (x n result) ;; repeat it n times, and at the end return the result. 
              (setq result ;; updates the result after each loop
                    (* result (+ x 1))))));; multiplies the result by 1, then 2, until it reaches n basically. 
 

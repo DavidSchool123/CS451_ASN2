@@ -30,12 +30,12 @@ both numbers |#
 it (if the number is odd).   For example, if you read the value 8 or 7 the return should be (1 3 5 7) |#
 
 (let ((n (read)) ;; saves the read number to n
-      (result nil)) ;; creates an empty list to later store the odd numbers
+      (result nil)) ;; store odd numbers here
      (if (> n 0) ;; need to check if the integer is positive
          (do ((x 1 (+ x 2))) ;; start x at 1 and then increase it by 2 each time EX: 1, 3, 5, .... (too only get the odd numbers)
-             ((> x n) ;; once x is larger then n , stop it (end loop)
-              (reverse result));; as the list saves the numbers produced after each loop at the first position 7, 5, 3, 1. We need to reverse it, and return it after the loop ends.
-             (push x result)) ;; for each loop, add the odd number to the list (result)
+             ((> x n) ;; stop when x goes past n
+              (reverse result));; as the list saves the numbers produced after each loop at the first position 7, 5, 3, 1. We reverse it, and return it after the loop ends.
+             (push x result)) ;; reverse becuase push adds to the front
      nil)) ;; returns false if the input wasn't positive
 
 
@@ -104,10 +104,15 @@ returns the sum of both numbers inside that cons.    For example (2c (cons 2 3))
 
 
 (defun 2d (n)
-    (let ((result 1)) ;; want to start the function at 1 as the factorial multiples start from 1 (save the 1 to result)
+    (let ((result 1)) ;; factorial starts at multiple 1
          (dotimes (x n result) ;; repeat it n times, and at the end return the result. 
              (setq result ;; updates the result after each loop
-                   (* result (+ x 1))))));; multiplies the result by 1, then 2, until it reaches n basically. 
+                   (* result (+ x 1);; multiply by the next number each loop
+                      )
+                   )
+             )
+         )
+    )
 
  #| 
 (2d 5)|#
@@ -151,14 +156,18 @@ return (5 7 9).|#
 
 ;; Question 3
 ;; on assignment paper
-;; Though process: So, looking at the question, we want to split it up by dividing the fraction from top (numerator) and bottom (denominator) into separate pieces. And not to forget the switching of the + - + after each fraction. As well as save each new fraction into an empty list, after each loop
-(defun 3a (n) ;; n is the parameter/input
-    (let ((result nil)) ;; creates an empty list 
-         (sign 1)) ;; want to make the sign equal to 1. Idea is to use this to make the formula part of + - + change for each fraction of n. And the first term of the formula is 1 (positive)
-    (dotimes (x n) ;; repeat n times, x goes from 0 to n-1
+;; Approch process: We wanted to split it up by dividing the fraction from top (numerator) and bottom (denominator) into separate pieces. And not to forget the switching of the + - + after each fraction. As well as save each new fraction into an empty list, after each loop.
+(defun 3a (n)
+    (let ((result nil) ;; creates an empty list 
+         (sign 1)) ;; make the sign equal to 1. Idea is to use this to make the formula part ' + - + ' change for each fraction of n. 
+    (dotimes (x n) 
             (push (/ (* 4 sign) ;; this makes the top part  (numerator) of the fraction be 4 or -4 (we using the second or pi formula)
                      (+ 1 (* 2 x))) result) ;; this makes the bottom (denominator) of the fraction be 1, 3, 5, .... . Then save all that to result (numerator and denominator with the / separating them both)
-            (if (= sign 1) ;; if the sign is 1 (test part)
-                (setq sign -1) ;; change it to -1 (then part)
-                (setq sign 1))) ;; otherwise change it to 1 (else part)
-    (cons '+ (reverse result)))) ;; puts the + in the front of the term (so it becomes like + 4 -4/3 ...), AFTER reversing the list so it is in correct order;;<- we got the reversed output so this fixes it with just (reverse result)
+            (if (= sign 1) ;; iif the sign is 1
+                (setq sign -1) ;; change it to -1 
+                (setq sign 1))) ;; otherwise change it to 1 
+    (cons '+ (reverse result) ;; puts the + in the front of the term (so it becomes like + 4 -4/3 ...), AFTER reversing the list so it is in correct order
+          )
+         )
+    )
+)

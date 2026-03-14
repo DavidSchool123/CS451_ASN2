@@ -29,15 +29,17 @@ both numbers |#
 #|Read one positive integer and return a list composed of all positive odd numbers less or equal to 
 it (if the number is odd).   For example, if you read the value 8 or 7 the return should be (1 3 5 7) |#
 
-#|
-(let ((n (read)) (result nil));; set a list (result) as empty
-    (if (plusp n) ;; check if the number is positive
-        (do ((i 1 (+ i 2))) ;;starts at 1 and increases by 2 so it only takes in the odd numbers 
-            ((> i n) result) ;;when i gets larger than n, the loop ends and returns result
-            (push i result)
-        )
-    )
-)|#
+(let ((n (read)) ;; saves the read number to n
+      (result nil)) ;; creates an empty list to later store the odd numbers
+     (if (> n 0) ;; need to check if the integer is positive
+         (do ((x 1 (+ x 2))) ;; start x at 1 and then increase it by 2 each time EX: 1, 3, 5, .... (too only get the odd numbers)
+             ((> x n) ;; once x is larger then n , stop it (end loop)
+              (reverse result));; as the list saves the numbers produced after each loop at the first position 7, 5, 3, 1. We need to reverse it, and return it after the loop ends.
+             (push x result)) ;; for each loop, add the odd number to the list (result)
+     nil)) ;; returns false if the input wasn't positive
+
+
+
 
 ;; Question 2
 
@@ -100,18 +102,14 @@ returns the sum of both numbers inside that cons.    For example (2c (cons 2 3))
 ;; 2d
 #|Create a non-recursive function that returns the factorial of a number passed as a parameter. |#
 
-#|
-(defun 2d (num)
-    (declare (integer num)) 
-    (let ((result 1) (i num))  ;; set the result to 1 & i (<- this is the counter) to num 
-        (do ()                        ;; each loop does result *= i
-            ((<= i 1) result) ;; this ends the loop when i <= i; and returns the result
-            (setq result (* result i)) ;; for each factor of num; it updates the result by muipltying it by i. (eX: start: 1 & i = 5 -> then results is: 5)
-            (setq i (- i 1))   ;; decrement i
-        )
-        (print result)
-    )
-)
+
+(defun 2d (n)
+    (let ((result 1)) ;; want to start the function at 1 as the factorial multiples start from 1 (save the 1 to result)
+         (dottimes (x n result) ;; repeat it n times, and at the end return the result. 
+             (setq result ;; updates the result after each loop
+                   (* result (+ x 1))))));; multiplies the result by 1, then 2, until it reaches n basically. 
+
+ #| 
 (2d 5)|#
 
 ;; 2e
@@ -151,20 +149,16 @@ return (5 7 9).|#
 
 (2e '(1 2 3) '(4 5 6))|#
 
-
-
 ;; Question 3
 ;; on assignment paper
-
-(defun 3a (n)
-    (let ((result nil)) ;; create result and set it to nil (empty)
-        (do 
-            ((i 0 (+ i 1))) ;; create do loop with i = 0 and with each recursition it does i+=1
-            ((= i n) (cons '* (cons 4 (cons (cons '+ (reverse result)) nil)))) ;; loop ends when i = n. & when it stops we return the list (* 4 (+ ...)) for how many n's
-            (setq result (cons (/ (expt -1 i) (+ (* 2 i) 1)) result)) ;; updates results, setting the new term to the list. 
-        )
-    )
-                   
-) ;; this is the formula ( (-1)^i / (2i + 1)) I came up with to calculate the next terms of the pi sequence. (as -1^i does the pattern of 1, -1, 1,.. which is adding and subtracting of the formula (+ - + part) as well as being the numerator 1 of the formula. and the 2i + 1 is the denominator that produces the vlaues 3, 5, ... . WITH the / (divide) that seperates them both is the fraction part of the formula.
-                                                                    ;; after wards which you just add the term to the list (result) using the:  cons (formula_terms) result 
-(3a 5)
+;; Though process: So, looking at the question, we want to split it up by dividing the fraction from top (numerator) and bottom (denominator) into separate pieces. And not to forget the switching of the + - + after each fraction. As well as save each new fraction into an empty list, after each loop
+(defun 3a (n) ;; n is the parameter/input
+    (let ((result nil)) ;; creates an empty list 
+         (sign 1)) ;; want to make the sign equal to 1. Idea is to use this to make the formula part of + - + change for each fraction of n. And the first term of the formula is 1 (positive)
+    (dotimes (x n) ;; repeat n times, x goes from 0 to n-1
+            (push (/ (* 4 sign) ;; this makes the top part  (numerator) of the fraction be 4 or -4 (we using the second or pi formula)
+                     (+ 1 (* 2 x))) result) ;; this makes the bottom (denominator) of the fraction be 1, 3, 5, .... . Then save all that to result (numerator and denominator with the / separating them both)
+            (if (= sign 1) ;; if the sign is 1 (test part)
+                (setq sign -1) ;; change it to -1 (then part)
+                (setq sign 1))) ;; otherwise change it to 1 (else part)
+    (cons '+ (reverse result)))) ;; puts the + in the front of the term (so it becomes like + 4 -4/3 ...), AFTER reversing the list so it is in correct order;;<- we got the reversed output so this fixes it with just (reverse result)

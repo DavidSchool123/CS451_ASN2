@@ -1,0 +1,120 @@
+/* Video Game Genres, by: Denis Moroz and David Ogunbanjo
+   To begin the code type ?- start.
+source: animal.pl
+*/
+
+start :- hypothesis(Game),
+      write('I think the game genre is '),
+      write(Game),
+      write('.'),
+      nl,
+      undo.
+
+/* how to ask questions
+ *  source: animal.pl
+*/
+ask(P) :-
+    write('Does the game '),
+    write(P),
+    write('? '),
+    read(Answer),
+    nl,
+    ( (Answer == yes ; Answer == y) -> assert(yes(P)) ; assert(no(P)), fail).
+
+/* how to ask questions and verify if not
+ *  source:animals.pl
+*/
+ask_no(P) :-
+    write('Does the game '),
+    write(P),
+    write('? '),
+    read(Answer),
+    nl,
+    ( (Answer == yes ; Answer == y) -> assert(yes(P)), fail ; assert(no(P)) ).
+
+:- dynamic yes/1,no/1.
+
+/* Verifies if something = yes  
+ *  source: animals.pl
+*/
+verify_if(S) :-
+   (yes(S) -> true ;
+    (no(S) -> fail ;
+     ask(S))).
+
+/* Verifies if something = no
+ *  source: animals.pl
+*/
+verify_if_not(S) :-
+   (yes(S) -> fail ;
+    (no(S) -> true ;
+     ask_no(S))).
+
+/* undo all yes/no assertions so that we can reuse start again 
+ *  source: animals.pl
+*/
+undo :- retract(yes(_)), fail.
+undo :- retract(no(_)), fail.
+undo.
+
+/* hypotheses to be tested
+ *  source: animal.pl. Took out cuts as
+*/
+hypothesis('an rpg') :- rpg.
+hypothesis('an fps') :- fps.
+hypothesis('a racing game') :- racing.
+hypothesis('a fighting game') :- fighting.
+hypothesis('a puzzle game') :- puzzle.
+hypothesis('a platformer') :- platformer.
+hypothesis('a horror game') :- horror.
+hypothesis('a strategy game') :- strategy.
+hypothesis(unknown).
+
+/* Game genre identification rules */
+rpg :- adventure_game,
+       verify_if('has character levels'),
+       verify_if('has a large world'),
+       verify_if_not('uses guns').
+
+fps :- action_game,
+       verify_if('uses guns'),
+       verify_if('uses first person view'),
+       verify_if_not('uses cars').
+
+racing :- vehicle_game,
+          verify_if('focuses on speed'),
+          verify_if_not('has story choices').
+
+fighting :- action_game,
+            verify_if('has one on one combat'),
+            verify_if_not('uses cars').
+
+puzzle :- thinking_game,
+          verify_if('focuses on solving puzzles'),
+          verify_if_not('uses guns').
+
+platformer :- action_game,
+              verify_if('focuses on jumping'),
+              verify_if_not('uses cars'),
+              verify_if_not('uses guns').
+
+horror :- adventure_game,
+          verify_if('is scary'),
+          verify_if_not('focuses on racing').
+
+strategy :- thinking_game,
+            verify_if('controls many units'),
+            verify_if_not('uses first person view').
+
+/* Classification rules shared by many games */
+action_game :- verify_if('has fast gameplay').
+action_game :- verify_if('needs quick reflexes').
+
+adventure_game :- verify_if('has exploration').
+adventure_game :- verify_if('has story choices').
+
+thinking_game :- verify_if('needs planning').
+thinking_game :- verify_if('focuses on solving puzzles').
+
+vehicle_game :- verify_if('uses cars').
+vehicle_game :- verify_if('uses vehicles').

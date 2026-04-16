@@ -58,7 +58,7 @@ undo :- retract(no(_)), fail.
 undo.
 
 /* hypotheses to be tested
- *  source: animal.pl. Took out cuts as
+ *  source: animal.pl. Took out cuts we wheren't comfortable (maybe add back)
 */
 hypothesis('an rpg') :- rpg.
 hypothesis('an fps') :- fps.
@@ -71,50 +71,52 @@ hypothesis('a strategy game') :- strategy.
 hypothesis(unknown).
 
 /* Game genre identification rules */
-rpg :- adventure_game,
+rpg :- adventure,
        verify_if('has character levels'),
        verify_if('has a large world'),
        verify_if_not('uses guns').
 
-fps :- action_game,
+fps :- action,
        verify_if('uses guns'),
        verify_if('uses first person view'),
        verify_if_not('uses cars').
 
-racing :- vehicle_game,
+racing :- vehicle,
           verify_if('focuses on speed'),
           verify_if_not('has story choices').
 
-fighting :- action_game,
+fighting :- actione,
             verify_if('has one on one combat'),
             verify_if_not('uses cars').
 
-puzzle :- thinking_game,
+puzzle :- thinking,
           verify_if('focuses on solving puzzles'),
           verify_if_not('uses guns').
 
-platformer :- action_game,
+platformer :- action,
               verify_if('focuses on jumping'),
               verify_if_not('uses cars'),
               verify_if_not('uses guns').
 
-horror :- adventure_game,
+horror :- adventure,
           verify_if('is scary'),
           verify_if_not('focuses on racing').
 
-strategy :- thinking_game,
+strategy :- thinking,
             verify_if('controls many units'),
             verify_if_not('uses first person view').
 
-/* Classification rules shared by many games */
-action_game :- verify_if('has fast gameplay').
-action_game :- verify_if('needs quick reflexes').
+/* Classification rules shared by many games 
+   *source: animals.pl
+*/
+action :- verify_if('has fast gameplay').
+action :- verify_if('needs quick reflexes').
 
-adventure_game :- verify_if('has exploration').
-adventure_game :- verify_if('has story choices').
+adventure :- verify_if('has exploration').
+adventure :- verify_if('has story choices').
 
-thinking_game :- verify_if('needs planning').
-thinking_game :- verify_if('focuses on solving puzzles').
+thinking :- verify_if('needs planning').
+thinking :- verify_if('focuses on solving puzzles').
 
-vehicle_game :- verify_if('uses cars').
-vehicle_game :- verify_if('uses vehicles').
+vehicle :- verify_if('uses cars').
+vehicle :- verify_if('uses vehicles').

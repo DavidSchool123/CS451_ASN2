@@ -1,7 +1,13 @@
 /* Video Game Genres, by: Denis Moroz and David Ogunbanjo
    * Source: we used animals.pl as the template and then adapted it to match our topic. Which is video game genres.
    * More: from the genres we chose the ones we were familiar with: RPG, FPS, Racing, Fighting, Puzzle, Platformer, Horror, and Strategy. 
-   To begin the code type ?- start.
+*/
+
+/* Prolog tutorial 2.17 Video Game Genre identification game.  
+
+
+  To begin the code type ?- start.
+  Answer only in Yes/No.
 */
 
 start :- hypothesis(Game),

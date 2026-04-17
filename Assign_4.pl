@@ -80,7 +80,7 @@ racing :- vehicle,
           verify_if('focuses on speed'),
           verify_if_not('has story choices').
 
-fighting :- actione,
+fighting :- action,
             verify_if('has one on one combat'),
             verify_if_not('uses cars').
 
